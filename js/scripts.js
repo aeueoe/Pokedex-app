@@ -1,5 +1,17 @@
 let pokemonList = [
-  { name: "paras", type: "bug, grass", speed: "25" },
-  { name: "vileplume", type: "grass, poison", speed: "50" },
-  { name: "poliwag", type: "water", speed: "90" },
+  { name: "Paras", type: ["bug, grass"], height: "0.3" },
+  { name: "Vileplume", type: ["grass, poison"], height: "1.2" },
+  { name: "Poliwag", type: ["water"], height: "0.6" },
 ];
+
+for (let i = 0; i < pokemonList.length; i++) {
+  document.write(
+    pokemonList[i].name + " (height: " + pokemonList[i].height + ") "
+  );
+  if (pokemonList[i].height <= 1.0) {
+    document.write("<br>");
+  } else {
+    document.write("- Wow, that's big!");
+    document.write("<br>");
+  }
+}
