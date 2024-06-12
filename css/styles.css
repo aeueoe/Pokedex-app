@@ -1,65 +1,213 @@
-#modal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+/* Body styling */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+  margin: 0;
+  padding: 0;
 }
 
-#modal-container.is-visible {
-  display: flex;
+/* Navbar */
+
+.navbar .brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f6c344;
 }
 
-.modal {
-  background-color: white;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  width: 80%;
-  max-width: 600px;
-  position: relative;
-}
-
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.modal-img {
-  max-width: 100%;
-  height: auto;
-  margin: 10px 0;
-}
-
-.modal h1 {
-  margin-top: 0;
-}
-
-.modal p {
-  margin-bottom: 0;
-}
-
-.button-class {
-  background-color: #6c65f1;
-  border: 2px solid #1a0435;
-  border-radius: 10px;
-  color: white;
-  padding: 0.8rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+.navbar .nav-item .nav-link {
   font-size: 1rem;
-  margin: 4px 2px;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
+  font-weight: 500;
+  color: #2a75bb;
+}
+
+.navbar .nav-item .nav-link:hover,
+.navbar .nav-item .nav-link.active {
+  color: #f6c344;
+}
+
+.navbar-toggler {
+  border: none;
+  color: #2a75bb;
+}
+
+/* Container */
+.container {
+  margin: 2rem auto;
+}
+
+/* Searchbar */
+
+.search-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+#pokemon-search {
+  width: 100%;
+  padding: 12px 20px;
+  border: 2px solid #2a75bb;
+  border-radius: 25px;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#pokemon-search::placeholder {
+  color: #999;
+}
+
+#pokemon-search:focus {
+  outline: none;
+  border-color: #ffcb05;
+  box-shadow: 0 0 10px rgba(255, 203, 5, 0.5);
+}
+
+/* List */
+.pokemon-list {
+  display: inline;
+}
+
+.list-group-item {
+  margin: 10px;
+  width: 10rem;
+  height: 10rem;
+  padding: 0;
+  display: inline-flex;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+}
+
+.list-group-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.list-group-item .btn {
+  flex-grow: 1;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: transparent;
+  border: none;
+  color: #2a75bb;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.list-group-item .btn:hover {
+  background-color: #ffcb05;
+  color: #ffffff;
+}
+/* Modal */
+.modal-content {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.modal-header {
+  background-color: #ffcb05;
+  border-bottom: none;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2a75bb;
+}
+
+.modal-body {
+  text-align: center;
+  padding: 2rem;
+}
+
+.modal-image {
+  margin-bottom: 1rem;
+}
+
+.modal-height,
+.modal-weight,
+.modal-types {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+/* Utility Classes */
+.bold {
+  font-weight: 500;
+}
+
+/* Styles for the back to top button */
+#btn-back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  font-size: 2rem;
+  display: none;
+  color: #f6c344;
+}
+
+@media (max-width: 1024px) {
+  .list-group-item {
+    width: calc(25% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    margin: 2rem auto;
+    text-align: center;
+  }
+
+  .list-group-item {
+    width: calc(33.33% - 20px);
+  }
+
+  .list-group-item .btn {
+    font-size: 0.9rem;
+  }
+
+  .modal-title {
+    font-size: 1rem;
+  }
+
+  .modal-height,
+  .modal-weight,
+  .modal-types {
+    font-size: 0.9rem;
+  }
+
+  #btn-back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .list-group-item {
+    width: calc(50% - 20px);
+  }
+
+  .list-group-item .btn {
+    font-size: 0.8rem;
+  }
+
+  .modal-height,
+  .modal-weight,
+  .modal-types {
+    font-size: 0.8rem;
+  }
+
+  #btn-back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+  }
 }
