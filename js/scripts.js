@@ -1,6 +1,6 @@
 let pokemonRepository = (function () {
   let pokemonList = [];
-  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=200";
+  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -28,37 +28,8 @@ let pokemonRepository = (function () {
       pokemon.name = capitalizeFirstLetter(pokemon.name);
       pokemonList.push(pokemon);
     } else {
-      console.log("Not Found");
+      console.error("Invalid Pokémon name");
     }
-  }
-  // Show the details of a Pokémon in the modal
-
-  function showModal(pokemon) {
-    let modalImage = document.querySelector(".modal-image");
-    let modalTitle = document.querySelector(".modal-title");
-    let modalHeight = document.querySelector(".modal-height");
-    let modalWeight = document.querySelector(".modal-weight");
-    let modalTypes = document.querySelector(".modal-types");
-
-     modalImage.src = pokemon.imageUrl;
-    modalImage.alt = `Image of ${pokemon.name}`;
-    modalTitle.innerText = pokemon.name;
-    modalHeight.innerHTML = `Height: <span class="bold">${formatHeight(
-      pokemon.height
-    )}</span>`;
-    modalWeight.innerHTML = `Weight: <span class="bold">${formatWeight(
-      pokemon.weight
-    )}</span>`;
-    modalTypes.innerHTML = `Types: <span class="bold">${formatTypes(
-      pokemon.types
-    )}</span>`;
-
-    const pokemonModal = document.getElementById("pokemonModal");
-    pokemonModal.classList.add("show");
-  }
-
-  function getAll() {
-    return pokemonList;
   }
 
   // Add a list item for a Pokémon list
@@ -85,6 +56,7 @@ let pokemonRepository = (function () {
 
   // Load the Pokémon list from the API
   function loadList() {
+    showLoadingMessage();
     return fetch(apiUrl)
       .then(function (response) {
         return response.json();
@@ -97,14 +69,17 @@ let pokemonRepository = (function () {
           };
           add(pokemon);
         });
+        hideLoadingMessage();
       })
       .catch(function (e) {
-        console.error(e);
+        console.error("Failed to load Pokémon list:", e);
+        hideLoadingMessage();
       });
   }
 
   // Load the details of a Pokémon from the API
   function loadDetails(pokemon) {
+    showLoadingMessage();
     let url = pokemon.detailsUrl;
 
     return fetch(url)
@@ -116,9 +91,11 @@ let pokemonRepository = (function () {
         pokemon.height = details.height;
         pokemon.weight = details.weight;
         pokemon.types = details.types;
+        hideLoadingMessage();
       })
       .catch(function (e) {
-        console.error(e);
+        console.error("Failed to load Pokémon details:", e);
+        hideLoadingMessage();
       });
   }
 
@@ -127,6 +104,44 @@ let pokemonRepository = (function () {
     loadDetails(pokemon).then(function () {
       showModal(pokemon);
     });
+  }
+
+  function showLoadingMessage() {
+    document.querySelector(".loading-message").innerText = "Loading...";
+  }
+
+  function hideLoadingMessage() {
+    document.querySelector(".loading-message").innerText = "";
+  }
+
+  // Show the details of a Pokémon in the modal
+
+  function showModal(pokemon) {
+    let modalImage = document.querySelector(".modal-image");
+    let modalTitle = document.querySelector(".modal-title");
+    let modalHeight = document.querySelector(".modal-height");
+    let modalWeight = document.querySelector(".modal-weight");
+    let modalTypes = document.querySelector(".modal-types");
+
+    modalImage.src = pokemon.imageUrl;
+    modalImage.alt = `Image of ${pokemon.name}`;
+    modalTitle.innerText = pokemon.name;
+    modalHeight.innerHTML = `Height: <span class="bold">${formatHeight(
+      pokemon.height
+    )}</span>`;
+    modalWeight.innerHTML = `Weight: <span class="bold">${formatWeight(
+      pokemon.weight
+    )}</span>`;
+    modalTypes.innerHTML = `Types: <span class="bold">${formatTypes(
+      pokemon.types
+    )}</span>`;
+
+    const pokemonModal = document.getElementById("pokemonModal");
+    pokemonModal.classList.add("show");
+  }
+
+  function getAll() {
+    return pokemonList;
   }
 
   // Search for Pokémon by name
