@@ -48,6 +48,11 @@ body {
   border-color: #ffcb05;
   box-shadow: 0 0 10px rgba(255, 203, 5, 0.5);
 }
+.loading-message {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 2rem auto;
+}
 .pokemon-list {
   display: inline;
 }
