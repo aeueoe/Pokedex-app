@@ -32,6 +32,10 @@ let pokemonRepository = (function () {
     }
   }
 
+  function getAll() {
+    return pokemonList;
+  }
+
   // Add a list item for a Pokémon list
   function addListItem(pokemon) {
     let pokemonListElement = document.querySelector(".pokemon-list");
@@ -57,6 +61,7 @@ let pokemonRepository = (function () {
   // Load the Pokémon list from the API
   function loadList() {
     showLoadingMessage();
+
     return fetch(apiUrl)
       .then(function (response) {
         return response.json();
@@ -115,7 +120,6 @@ let pokemonRepository = (function () {
   }
 
   // Show the details of a Pokémon in the modal
-
   function showModal(pokemon) {
     let modalImage = document.querySelector(".modal-image");
     let modalTitle = document.querySelector(".modal-title");
@@ -138,10 +142,6 @@ let pokemonRepository = (function () {
 
     const pokemonModal = document.getElementById("pokemonModal");
     pokemonModal.classList.add("show");
-  }
-
-  function getAll() {
-    return pokemonList;
   }
 
   // Search for Pokémon by name
