@@ -11,11 +11,14 @@ body {
   font-weight: 700;
   color: #f6c344;
 }
-.navbar .nav-item .nav-link {
+.navbar .nav-item .nav-link,
+.navbar .nav-item a {
   font-size: 1rem;
   font-weight: 500;
   color: #2a75bb;
+  text-decoration: none;
 }
+
 .navbar .nav-item .nav-link.active,
 .navbar .nav-item .nav-link:hover {
   color: #f6c344;
@@ -91,6 +94,19 @@ body {
   font-size: 1rem;
   margin: 2rem auto;
   z-index: 9999;
+}
+#load-more {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: #2a75bb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 .modal-content {
   border-radius: 10px;

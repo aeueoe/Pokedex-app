@@ -1,6 +1,9 @@
 let pokemonRepository = (function () {
   let pokemonList = [];
-  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
+  let apiUrl = "https://pokeapi.co/api/v2/pokemon/";
+
+  let limit = 20;
+  let offset = 0;
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -59,10 +62,12 @@ let pokemonRepository = (function () {
   }
 
   // Load the Pokémon list from the API
-  function loadList() {
+  function loadInitialList() {
     showLoadingMessage();
 
-    return fetch(apiUrl)
+    let url = `${apiUrl}?limit=${limit}&offset=${offset}`;
+
+    return fetch(url)
       .then(function (response) {
         return response.json();
       })
@@ -74,6 +79,38 @@ let pokemonRepository = (function () {
           };
           add(pokemon);
         });
+        offset += limit;
+        hideLoadingMessage();
+      })
+      .catch(function (e) {
+        console.error("Failed to load Pokémon list:", e);
+        hideLoadingMessage();
+      });
+  }
+
+  function loadMoreList() {
+    showLoadingMessage();
+
+    let url = `${apiUrl}?limit=${limit}&offset=${offset}`;
+
+    return fetch(url)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+        if (json.results.length === 0) {
+          console.log("No more Pokémon to load");
+          return;
+        }
+        json.results.forEach(function (item) {
+          let pokemon = {
+            name: item.name,
+            detailsUrl: item.url,
+          };
+          add(pokemon);
+          addListItem(pokemon);
+        });
+        offset += limit;
         hideLoadingMessage();
       })
       .catch(function (e) {
@@ -181,20 +218,24 @@ let pokemonRepository = (function () {
     });
   });
 
+  // Initial load
+  loadInitialList().then(function () {
+    pokemonRepository.getAll().forEach(function (pokemon) {
+      pokemonRepository.addListItem(pokemon);
+    });
+  });
+
+  document.getElementById("load-more").addEventListener("click", loadMoreList);
+
   return {
     getAll: getAll,
     add: add,
     addListItem: addListItem,
-    loadList: loadList,
+    loadInitialList: loadInitialList,
+    loadMoreList: loadMoreList,
     showDetails: showDetails,
     showModal: showModal,
     renderList: renderList,
     searchPokemon: searchPokemon,
   };
 })();
-
-pokemonRepository.loadList().then(function () {
-  pokemonRepository.getAll().forEach(function (pokemon) {
-    pokemonRepository.addListItem(pokemon);
-  });
-});
