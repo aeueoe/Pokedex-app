@@ -1,3 +1,6 @@
+**Live**:(https://aeueoe.github.io/Pokedex-app/)
+
+
 # Pokedex APP
 
 This project is a Pokémon repository that loads data from the PokéAPI and displays a list of Pokémon cards with a search functionality. When a Pokémon card is clicked, it shows detailed information about the Pokémon in a modal.
