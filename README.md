@@ -1,4 +1,4 @@
-**Live**:(https://aeueoe.github.io/Pokedex-app/)
+[Live](https://aeueoe.github.io/Pokedex-app/)
 
 
 # Pokedex APP
